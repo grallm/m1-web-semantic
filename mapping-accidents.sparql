@@ -36,14 +36,14 @@ FROM <file:accidents.csv>
 WHERE {
   BIND (URI(CONCAT('http://ex.org/car-crashes/', ?crashIdCol)) AS ?crashId)
   BIND (xsd:integer(?yearCol) AS ?year)
-  BIND (xsd:date(?dateCol) AS ?date)
+  BIND (xsd:dateTime(?dateCol) AS ?date)
   BIND (xsd:string(?crashTypeCol) AS ?crashType)
   BIND (xsd:integer(?streetNbCol) AS ?streetNb)
   BIND (xsd:string(?streetTypeCol) AS ?streetType)
   BIND (xsd:string(?streetPrefixCol) AS ?streetPrefix)
   BIND (xsd:string(?streetNameCol) AS ?streetName)
   BIND (URI(CONCAT('http://dbpedia.org/resource/', REPLACE(?cityCol, "\\W", "-", "i"))) AS ?city)
-  BIND (xsd:decimal(?latitudeCol) AS ?latitude)
-  BIND (xsd:decimal(?longitudeCol) AS ?longitude)
-  BIND (xsd:string(?lat_lonCol) AS ?lat_lon)
+  BIND (xsd:double(REPLACE(?latitudeCol, ",", ".", "i")) AS ?latitude)
+  BIND (xsd:double(REPLACE(?longitudeCol, ",", ".", "i")) AS ?longitude)
+  BIND (xsd:string(?lat_longCol) AS ?lat_long)
 }
