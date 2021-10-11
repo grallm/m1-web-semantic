@@ -1,0 +1,49 @@
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
+
+CONSTRUCT {
+  # Numéro d'intervention
+  ?crashId a mag:Crash;
+    # Commune du lieu d'intervention
+    dbo:city ?city;
+    # Année de l'intervention
+    dbo:year ?year;
+    # Latitude
+    geo:lat ?latitude;
+    # Longitude
+    geo:long ?longitude;
+    # Date système de début d'interv.
+    exif:dateTime ?date;
+    # No
+    mag:streetNb ?streetNb;
+    # Type
+    mag:streetType ?streetType;
+    # Préfixe du nom de la voie
+    mag:streetPrefix ?streetPrefix;
+    # Nom de la voie
+    mag:streetName ?streetName;
+    # Libellé famille
+    mag:crashType ?crashType;
+    # Localisation
+    geo:lat_long ?lat_long
+} 
+
+FROM <file:accidents.csv> 
+
+WHERE {
+  BIND (URI(CONCAT('http://ex.org/car-crashes/', ?crashIdCol)) AS ?crashId)
+  BIND (xsd:integer(?yearCol) AS ?year)
+  BIND (xsd:date(?dateCol) AS ?date)
+  BIND (xsd:string(?crashTypeCol) AS ?crashType)
+  BIND (xsd:integer(?streetNbCol) AS ?streetNb)
+  BIND (xsd:string(?streetTypeCol) AS ?streetType)
+  BIND (xsd:string(?streetPrefixCol) AS ?streetPrefix)
+  BIND (xsd:string(?streetNameCol) AS ?streetName)
+  BIND (URI(CONCAT('http://dbpedia.org/resource/', REPLACE(?cityCol, "\\W", "-", "i"))) AS ?city)
+  BIND (xsd:decimal(?latitudeCol) AS ?latitude)
+  BIND (xsd:decimal(?longitudeCol) AS ?longitude)
+  BIND (xsd:string(?lat_lonCol) AS ?lat_lon)
+}
