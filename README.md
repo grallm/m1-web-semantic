@@ -10,6 +10,13 @@ We will also be able to link our data with the other crouse groups and host our 
 ## Used dataset
 [Interventions pour accident sur la voie publique en Loire-Atlantique](https://data.loire-atlantique.fr/explore/dataset/284400017_interventions-pour-accident-sur-la-voie-publique-en-loire-atlantique/)
 
+## From CSV to Turtle
+By using the mapping file `mapping-accidents.sparql` and Tarql we have been able to transform the CSV data to a Turtle Linked Data.
+
+```
+./tarql --ntriples mapping-accidents.sparql accidents.csv > data-accidents-mag.ttl
+```
+
 ## Project members
 - Malo GRALL
 - Guillaume POIGNANT
