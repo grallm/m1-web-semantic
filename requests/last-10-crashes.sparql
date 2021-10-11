@@ -1,0 +1,30 @@
+# Formatted date and city of the last 10 crashes
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT
+  (REPLACE(
+    REPLACE(STR(?cityNoFormat), "http://dbpedia.org/resource/", ""),
+    "/",
+    ""
+  ) AS ?city)
+  (CONCAT(
+    STR(DAY(?dateNoFormat)),
+    "/",
+    STR(MONTH(?dateNoFormat)), 
+    "/", 
+    STR(YEAR(?dateNoFormat)),
+    " ",
+    STR(HOURS(?dateNoFormat)),
+    ":",
+    STR(MINUTES(?dateNoFormat))
+  ) AS ?date)
+WHERE
+{
+  ?s exif:dateTime ?dateNoFormat .
+  ?s dbo:city ?cityNoFormat
+}
+ORDER BY DESC(?date)
+LIMIT 10
