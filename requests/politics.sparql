@@ -1,0 +1,26 @@
+PREFIX schema:  <https://schema.org/>
+PREFIX dbo:  <https://dbpedia.org/ontology/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX :  <https://fuseki.dolr.es/administrativeArea/>
+PREFIX custom:  <https://fuseki.dolr.es/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+
+# Get Politics and manadate years
+SELECT 
+  ?orgaName 
+  (YEAR(?startingDate)  AS ?startYear)
+	(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+WHERE {
+  ?area schema:address "44" .
+  ?member schema:AdministrativeArea ?area;
+    custom:startingDate ?startingDate;
+    custom:mandatesNumber ?mandatesNumber;
+    schema:Organization ?orga .
+  
+  ?orga schema:name ?orgaName .
+}
