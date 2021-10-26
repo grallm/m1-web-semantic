@@ -1,0 +1,16 @@
+PREFIX ex: <http://example.org/a#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos>
+
+SELECT
+  ?bikeYear
+  (COUNT(?bikeYear) AS ?nbBikeCrashes)
+WHERE
+{
+  ?URI a ex:AccidentsVelo;
+    ex:date ?Date;
+  
+  BIND(YEAR(xsd:date(?Date)) as ?bikeYear)
+}
+GROUP BY ?bikeYear
