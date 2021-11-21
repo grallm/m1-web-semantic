@@ -2,7 +2,6 @@ PREFIX mag: <http://ex.org/car-crashes#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX schema: <http://schema.org/>
 
@@ -18,7 +17,7 @@ CONSTRUCT {
     # Longitude
     geo:long ?longitude;
     # Date système de début d'interv.
-    exif:dateTime ?date;
+    xsd:dateTime ?date;
     # Adresse concaténée
     schema:address ?address;
     # Libellé famille
