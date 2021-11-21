@@ -42,7 +42,18 @@ WHERE {
   BIND (xsd:string(?streetTypeCol) AS ?streetType)
   BIND (xsd:string(?streetPrefixCol) AS ?streetPrefix)
   BIND (xsd:string(?streetNameCol) AS ?streetName)
-  BIND (URI(CONCAT('http://dbpedia.org/resource/', REPLACE(?cityCol, "\\W", "-", "i"))) AS ?city)
+  BIND (URI(CONCAT(
+    # Add DBPedia URL
+    'http://dbpedia.org/resource/',
+    REPLACE(
+      # Put uppercase only first letter
+      CONCAT(
+        UCASE(SUBSTR(STR(?cityCol), 0, 1)),
+        LCASE(SUBSTR(STR(?cityCol), 1))
+      ),
+      "\\W", "_", "i"
+    )
+  )) AS ?city)
   BIND (xsd:double(REPLACE(?latitudeCol, ",", ".", "i")) AS ?latitude)
   BIND (xsd:double(REPLACE(?longitudeCol, ",", ".", "i")) AS ?longitude)
   BIND (xsd:string(?lat_longCol) AS ?lat_long)

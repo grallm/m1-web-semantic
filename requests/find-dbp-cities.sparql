@@ -1,0 +1,15 @@
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
+
+SELECT (CONCAT(
+    SUBSTR(STR(?city2), 1, 29),
+    UCASE(SUBSTR(STR(?city2), 30, 30)),
+    LCASE(SUBSTR(STR(?city2), 31))
+  )AS ?city3)
+
+WHERE {
+ ?city dbo:city ?city2 
+} GROUP BY ?city2
