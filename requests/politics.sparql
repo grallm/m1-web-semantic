@@ -9,7 +9,7 @@ PREFIX mag: <http://ex.org/car-crashes#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 
 
-# Get Politics and manadate years
+# Get Politics and mandate years from department 44
 SELECT 
   ?orgaName 
   (YEAR(?startingDate)  AS ?startYear)
@@ -17,6 +17,7 @@ SELECT
 
 WHERE {
   ?area schema:address "44" .
+  # Utiliser ^ ou /
   ?member schema:AdministrativeArea ?area;
     custom:startingDate ?startingDate;
     custom:mandatesNumber ?mandatesNumber;

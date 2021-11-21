@@ -1,0 +1,37 @@
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/a#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+# All crashes by year: car and bicycle
+SELECT *
+WHERE
+{
+  {
+    SELECT
+      ?year
+      (COUNT(?year) AS ?nbCrashes)
+    WHERE
+    {
+      ?s a mag:Crash ;
+        dbo:year ?year
+    }
+    GROUP BY ?year
+  }
+
+  UNION
+
+  {
+    SELECT
+      ?year
+      (COUNT(?year) AS ?nbBikeCrashes)
+    WHERE
+    {
+      ?URI a ex:AccidentsVelo;
+        ex:date ?Date;
+      
+      BIND(YEAR(xsd:date(?Date)) as ?year)
+    }
+    GROUP BY ?year
+  }
+}
