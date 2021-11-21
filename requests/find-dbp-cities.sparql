@@ -6,9 +6,9 @@ PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
 
 SELECT (CONCAT(
     SUBSTR(STR(?city2), 1, 29),
-    UCASE(SUBSTR(STR(?city2), 30, 30)),
+    UCASE(SUBSTR(STR(?city2), 30, 1)),
     LCASE(SUBSTR(STR(?city2), 31))
-  )AS ?city3)
+  ) AS ?city3)
 
 WHERE {
  ?city dbo:city ?city2 

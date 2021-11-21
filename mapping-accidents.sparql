@@ -33,23 +33,32 @@ WHERE {
   BIND (xsd:integer(?yearCol) AS ?year)
   BIND (xsd:dateTime(?dateCol) AS ?date)
   BIND (xsd:string(?crashTypeCol) AS ?crashType)
+
   BIND (xsd:integer(?streetNbCol) AS ?streetNb)
   BIND (xsd:string(?streetTypeCol) AS ?streetType)
   BIND (xsd:string(?streetPrefixCol) AS ?streetPrefix)
   BIND (xsd:string(?streetNameCol) AS ?streetName)
+
+  BIND (CONCAT(
+    xsd:string(?streetNb),
+    " ",
+    xsd:string(?streetType),
+    " ",
+    xsd:string(?streetPrefix),
+    " ",
+    xsd:string(?streetName)
+  ) AS ?address)
+
   BIND (URI(CONCAT(
     # Add DBPedia URL
     'http://dbpedia.org/resource/',
     REPLACE(
-      # Replace letter after '-' with uppercase
-      REPLACE(
-        # Put uppercase only first letter
-        CONCAT(
-          UCASE(SUBSTR(STR(?cityCol), 0, 1)),
-          LCASE(SUBSTR(STR(?cityCol), 1))
-        ),
+      # Put uppercase only first letter
+      CONCAT(
+        UCASE(SUBSTR(STR(?cityCol), 1, 1)),
+        LCASE(SUBSTR(STR(?cityCol), 2))
       ),
-      "\\W", "_", "i"
+      "\\W", "-", "i"
     )
   )) AS ?city)
   BIND (xsd:double(REPLACE(?latitudeCol, ",", ".", "i")) AS ?latitude)
