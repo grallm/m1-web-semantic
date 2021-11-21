@@ -46,10 +46,13 @@ WHERE {
     # Add DBPedia URL
     'http://dbpedia.org/resource/',
     REPLACE(
-      # Put uppercase only first letter
-      CONCAT(
-        UCASE(SUBSTR(STR(?cityCol), 0, 1)),
-        LCASE(SUBSTR(STR(?cityCol), 1))
+      # Replace letter after '-' with uppercase
+      REPLACE(
+        # Put uppercase only first letter
+        CONCAT(
+          UCASE(SUBSTR(STR(?cityCol), 0, 1)),
+          LCASE(SUBSTR(STR(?cityCol), 1))
+        ),
       ),
       "\\W", "_", "i"
     )
