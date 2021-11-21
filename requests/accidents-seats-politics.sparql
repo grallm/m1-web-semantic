@@ -1,0 +1,138 @@
+PREFIX schema:  <https://schema.org/>
+PREFIX dbo:  <https://dbpedia.org/ontology/>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX :  <https://fuseki.dolr.es/administrativeArea/>
+PREFIX custom:  <https://fuseki.dolr.es/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.org/a#>
+
+SELECT
+  ?orgaName
+  ?nbElus
+  ?year
+  (?nbCrashes + ?nbBikeCrashes AS ?totalCrashes)
+WHERE
+{
+  {
+    # Get Politics and mandate years from department 44
+    SELECT * WHERE {
+      {
+        SELECT
+          (2016 as ?year)
+          ?orgaName
+          (COUNT(?orgaName) AS ?nbElus)
+
+        WHERE {
+          ?area schema:address "44" .
+          # Utiliser ^ ou /
+          ?member schema:AdministrativeArea ?area;
+            custom:startingDate ?startingDate;
+            custom:mandatesNumber ?mandatesNumber;
+            schema:Organization ?orga .
+          
+          ?orga schema:name ?orgaName .
+
+          BIND(YEAR(?startingDate) AS ?startYear)
+          BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+          # Filtrer pour avoir seulement les années intéressantes d'accidents
+          FILTER (?startYear <= 2016 && ?endDate >= 2016)
+        }
+        GROUP BY ?orgaName
+      }
+
+      UNION
+
+      {
+        SELECT
+          (2017 as ?year)
+          ?orgaName
+          (COUNT(?orgaName) AS ?nbElus)
+
+        WHERE {
+          ?area schema:address "44" .
+          # Utiliser ^ ou /
+          ?member schema:AdministrativeArea ?area;
+            custom:startingDate ?startingDate;
+            custom:mandatesNumber ?mandatesNumber;
+            schema:Organization ?orga .
+          
+          ?orga schema:name ?orgaName .
+
+          BIND(YEAR(?startingDate) AS ?startYear)
+          BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+          # Filtrer pour avoir seulement les années intéressantes d'accidents
+          FILTER (?startYear <= 2017 && ?endDate >= 2017)
+        }
+        GROUP BY ?orgaName
+      }
+
+      UNION
+
+      {
+        SELECT
+          (2018 as ?year)
+          ?orgaName
+          (COUNT(?orgaName) AS ?nbElus)
+
+        WHERE {
+          ?area schema:address "44" .
+          # Utiliser ^ ou /
+          ?member schema:AdministrativeArea ?area;
+            custom:startingDate ?startingDate;
+            custom:mandatesNumber ?mandatesNumber;
+            schema:Organization ?orga .
+          
+          ?orga schema:name ?orgaName .
+
+          BIND(YEAR(?startingDate) AS ?startYear)
+          BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+          # Filtrer pour avoir seulement les années intéressantes d'accidents
+          FILTER (?startYear <= 2018 && ?endDate >= 2018)
+        }
+        GROUP BY ?orgaName
+      }
+    }
+    ORDER BY DESC(?nbElus)
+    LIMIT 3
+  }
+
+  {
+    # All crashes by year: car and bicycle
+    SELECT *
+    WHERE
+    {
+      {
+        SELECT
+          ?year
+          (COUNT(?year) AS ?nbCrashes)
+        WHERE
+        {
+          ?s a mag:Crash ;
+            dbo:year ?year
+        }
+        GROUP BY ?year
+      }
+
+      {
+        SELECT
+          ?year
+          (COUNT(?year) AS ?nbBikeCrashes)
+        WHERE
+        {
+          ?URI rdf:type ex:AccidentsVelo;
+            ex:date ?Date;
+          
+          BIND(YEAR(xsd:date(?Date)) as ?year)
+        }
+        GROUP BY ?year
+      }
+    }
+  }
+}
+ORDER BY DESC(?totalCrashes)
