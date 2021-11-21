@@ -12,8 +12,8 @@ PREFIX dbo: <http://dbpedia.org/ontology/>
 # Get Politics and mandate years from department 44
 SELECT 
   ?orgaName 
-  (YEAR(?startingDate)  AS ?startYear)
-	(?startYear + 5 * ?mandatesNumber AS ?endDate)
+  ?startYear
+  ?endDate
 
 WHERE {
   ?area schema:address "44" .
@@ -24,4 +24,10 @@ WHERE {
     schema:Organization ?orga .
   
   ?orga schema:name ?orgaName .
+
+  BIND(YEAR(?startingDate) AS ?startYear)
+	BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+  # Filtrer pour avoir seulement les années intéressantes d'accidents
+  FILTER (?startYear <= 2016 && ?endDate >= 2018)
 }
