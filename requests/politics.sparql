@@ -10,24 +10,85 @@ PREFIX dbo: <http://dbpedia.org/ontology/>
 
 
 # Get Politics and mandate years from department 44
-SELECT 
-  ?orgaName 
-  ?startYear
-  ?endDate
+SELECT * WHERE {
+  {
+    SELECT
+      (2016 as ?year)
+      ?orgaName
+      (COUNT(?orgaName) AS ?nbElus)
 
-WHERE {
-  ?area schema:address "44" .
-  # Utiliser ^ ou /
-  ?member schema:AdministrativeArea ?area;
-    custom:startingDate ?startingDate;
-    custom:mandatesNumber ?mandatesNumber;
-    schema:Organization ?orga .
-  
-  ?orga schema:name ?orgaName .
+    WHERE {
+      ?area schema:address "44" .
+      # Utiliser ^ ou /
+      ?member schema:AdministrativeArea ?area;
+        custom:startingDate ?startingDate;
+        custom:mandatesNumber ?mandatesNumber;
+        schema:Organization ?orga .
+      
+      ?orga schema:name ?orgaName .
 
-  BIND(YEAR(?startingDate) AS ?startYear)
-	BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+      BIND(YEAR(?startingDate) AS ?startYear)
+      BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
 
-  # Filtrer pour avoir seulement les années intéressantes d'accidents
-  FILTER (?startYear <= 2016 && ?endDate >= 2018)
+      # Filtrer pour avoir seulement les années intéressantes d'accidents
+      FILTER (?startYear <= 2016 && ?endDate >= 2016)
+    }
+    GROUP BY ?orgaName
+  }
+
+  UNION
+
+  {
+    SELECT
+      (2017 as ?year)
+      ?orgaName
+      (COUNT(?orgaName) AS ?nbElus)
+
+    WHERE {
+      ?area schema:address "44" .
+      # Utiliser ^ ou /
+      ?member schema:AdministrativeArea ?area;
+        custom:startingDate ?startingDate;
+        custom:mandatesNumber ?mandatesNumber;
+        schema:Organization ?orga .
+      
+      ?orga schema:name ?orgaName .
+
+      BIND(YEAR(?startingDate) AS ?startYear)
+      BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+      # Filtrer pour avoir seulement les années intéressantes d'accidents
+      FILTER (?startYear <= 2017 && ?endDate >= 2017)
+    }
+    GROUP BY ?orgaName
+  }
+
+  UNION
+
+  {
+    SELECT
+      (2018 as ?year)
+      ?orgaName
+      (COUNT(?orgaName) AS ?nbElus)
+
+    WHERE {
+      ?area schema:address "44" .
+      # Utiliser ^ ou /
+      ?member schema:AdministrativeArea ?area;
+        custom:startingDate ?startingDate;
+        custom:mandatesNumber ?mandatesNumber;
+        schema:Organization ?orga .
+      
+      ?orga schema:name ?orgaName .
+
+      BIND(YEAR(?startingDate) AS ?startYear)
+      BIND(?startYear + 5 * ?mandatesNumber AS ?endDate)
+
+      # Filtrer pour avoir seulement les années intéressantes d'accidents
+      FILTER (?startYear <= 2018 && ?endDate >= 2018)
+    }
+    GROUP BY ?orgaName
+  }
 }
+ORDER BY DESC(?nbElus)
+LIMIT 3
