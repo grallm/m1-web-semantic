@@ -2,6 +2,7 @@ PREFIX mag: <http://ex.org/car-crashes#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX ex: <http://example.org/a#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 # All crashes by year: car and bicycle
 SELECT *
@@ -19,15 +20,13 @@ WHERE
     GROUP BY ?year
   }
 
-  UNION
-
   {
     SELECT
       ?year
       (COUNT(?year) AS ?nbBikeCrashes)
     WHERE
     {
-      ?URI a ex:AccidentsVelo;
+      ?URI rdf:type ex:AccidentsVelo;
         ex:date ?Date;
       
       BIND(YEAR(xsd:date(?Date)) as ?year)
