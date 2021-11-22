@@ -1,0 +1,28 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+:CarCrashes rdf:type void:Dataset;
+    dcterms:title "Interventions pour accident sur la voie publique en Loire-Atlantique";
+    dcterms:description "Accidents de voiture dans le département Loire-Atlantique entre 2013 et 2020";
+    dcterms:contributor :Malo;
+    dcterms:contributor :Guillaume;
+    dcterms:contributor :Amar;
+    dc:source <https://data.loire-atlantique.fr/explore/dataset/284400017_interventions-pour-accident-sur-la-voie-publique-en-loire-atlantique/>;
+    void:triples 329029;
+    void:entities 45132;
+    void:classes 6.
+
+:Malo a foaf:Person;
+    rdfs:label "Malo GRALL";
+    foaf:mbox <mailto:malo.grall@etu.univ-nantes.fr>.
+
+:Guillaume a foaf:Person;
+    rdfs:label "Guillaume POIGNANT";
+    foaf:mbox <mailto:guillaume.poignant@etu.univ-nantes.fr>.
+
+:Amar a foaf:Person;
+    rdfs:label "Amar TIOUS";
+    foaf:mbox <mailto:amar.tious@etu.univ-nantes.fr>.
+
