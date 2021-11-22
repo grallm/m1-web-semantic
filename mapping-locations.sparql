@@ -1,0 +1,55 @@
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <http://schema.org/>
+
+CONSTRUCT {
+  ?locationId rdf:type schema:GeoCoordinates;
+    # Latitude
+    schema:latitude ?latitude;
+    # Longitude
+    schema:longitude ?longitude;
+}
+
+FROM <file:accidents.csv> 
+
+WHERE {
+  BIND (URI(CONCAT('http://ex.org/car-crashes/', ?crashIdCol)) AS ?crashId)
+  BIND (xsd:integer(?yearCol) AS ?year)
+  BIND (xsd:dateTime(?dateCol) AS ?date)
+  BIND (xsd:string(?crashTypeCol) AS ?crashType)
+
+  BIND (xsd:integer(?streetNbCol) AS ?streetNb)
+  BIND (xsd:string(?streetTypeCol) AS ?streetType)
+  BIND (xsd:string(?streetPrefixCol) AS ?streetPrefix)
+  BIND (xsd:string(?streetNameCol) AS ?streetName)
+
+  BIND (CONCAT(
+    xsd:string(?streetNb),
+    " ",
+    xsd:string(?streetType),
+    " ",
+    xsd:string(?streetPrefix),
+    " ",
+    xsd:string(?streetName)
+  ) AS ?address)
+
+  BIND (URI(CONCAT(
+    # Add DBPedia URL
+    'http://dbpedia.org/resource/',
+    REPLACE(
+      # Put uppercase only first letter
+      CONCAT(
+        UCASE(SUBSTR(STR(?cityCol), 1, 1)),
+        LCASE(SUBSTR(STR(?cityCol), 2))
+      ),
+      "\\W", "-", "i"
+    )
+  )) AS ?city)
+
+  BIND (URI(CONCAT('http://ex.org/car-crashes/', xsd:string(?lat_longCol))) AS ?locationId)
+  BIND (xsd:double(REPLACE(?latitudeCol, ",", ".", "i")) AS ?latitude)
+  BIND (xsd:double(REPLACE(?longitudeCol, ",", ".", "i")) AS ?longitude)
+}
