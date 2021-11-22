@@ -1,0 +1,60 @@
+PREFIX mag: <http://ex.org/car-crashes#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <http://schema.org/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+
+:CarCrashes rdf:type void:Dataset ;
+    dcterms:title               "Car crashes" ;
+    dcterms:description         "Accidents de la routes ayant nécessité l'intervention des service publique en Loire-Atlentique, de 2013 à 2019."
+    dcterms:source              <https://data.loire-atlantique.fr/explore/dataset/284400017_interventions-pour-accident-sur-la-voie-publique-en-loire-atlantique> 
+    dcterms:publisher           :data_loire_atlantique;
+    dcterms:contributor         :Malo;
+    dcterms:contributor         :Guillaume;
+    dcterms:contributor         :Amar;
+    dcterms:subject             <http://dbpedia.org/resource/Traffic_collision> ;
+    void:feature                <http://www.w3.org/ns/formats/Turtle> ;
+    void:triples                462554 ;
+    void:entities               46188 ;
+    void:subset                 :Crashes ;
+    void:subset                 :Locations .
+
+
+:Crashes rdf:type void:dataset ;
+    dcterms:title               "Crash data set" ;
+    dcterms:description         "Car crash datas from 2013 to 2019" ;
+    void:propertyPartition      [void:property dbo:city] ;
+    void:propertyPartition      [void:property dbo:year] ;
+    void:propertyPartition      [void:property xsd:dateTime] ;
+    void:propertyPartition      [void:property schema:address] ;
+    void:propertyPartition      [void:property mag:crashType] ;
+    void:propertyPartition      [void:property schema:geo] .
+
+:Locations rdf:type void:dataset ;
+    dcterms:title               "Location data set" ;
+    dcterms:description         "Car crash locations from 2013 to 2019" ;
+    void:propertyPartition      [void:property schema:latitude] ;
+    void:propertyPartition      [void:property schema:longitude] ;
+
+
+:data_loire_atlantique rdf:type foaf:Organization;
+    rdfs:label                  "data.loire-atlantique.fr" ;
+    foaf:homepage               <https://data.loire-atlantique.fr/pages/home/> .
+
+
+:Malo rdf:type foaf:Person
+    rdfs:label                  "Malo Grall";
+    foaf:mbox                   <mailto:malo.grall@etu.univ-nantes.fr> .
+
+:Guillaume rdf:type foaf:Person
+    rdfs:label                  "Guillaume Poignant";
+    foaf:mbox                   <mailto:guillaume.poignant@etu.univ-nantes.fr> .
+
+    
+:Amar rdf:type foaf:Person
+    rdfs:label                  "Amar Tious";
+    foaf:mbox                   <mailto:amar.tious@etu.univ-nantes.fr> .
