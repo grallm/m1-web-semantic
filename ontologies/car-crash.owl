@@ -10,13 +10,24 @@ Prefix(schema:=<http://schema.org/>)
 
 
 Ontology(
+Declaration(Class(dbo:City))
 Declaration(Class(mag:Crash))
 Declaration(Class(mag:CrashWithCoord))
 Declaration(Class(schema:GeoCoordinates))
+Declaration(Class(schema:Place))
+Declaration(Class(<http://www.co-ode.org/ontologies/ont.owl#CrashLinkedCity>))
+Declaration(Class(geo:GeoCoordinates))
+Declaration(ObjectProperty(dbo:city))
 Declaration(ObjectProperty(schema:geo))
-Declaration(NamedIndividual(<http://ex.org/car-crashes/14LA009452>))
+Declaration(DataProperty(schema:latitude))
+Declaration(DataProperty(schema:longitude))
+Declaration(DataProperty(geo:lat))
+Declaration(DataProperty(geo:long))
+Declaration(NamedIndividual(<http://dbpedia.org/resource/Nantes>))
 Declaration(NamedIndividual(<http://ex.org/car-crashes/15LA058540>))
+Declaration(NamedIndividual(<http://ex.org/car-crashes/19LA003636>))
 Declaration(NamedIndividual(<http://ex.org/car-crashes/47.2440687735,-1.5510107177>))
+Declaration(NamedIndividual(<http://ex.org/car-crashes/47.2800607735,-1.4584318711>))
 Declaration(AnnotationProperty(dbo:city))
 Declaration(AnnotationProperty(dbo:year))
 Declaration(AnnotationProperty(mag:crashType))
@@ -24,6 +35,7 @@ Declaration(AnnotationProperty(schema:geo))
 Declaration(AnnotationProperty(schema:latitude))
 Declaration(AnnotationProperty(schema:longitude))
 Declaration(AnnotationProperty(xsd:dateTime))
+Declaration(AnnotationProperty(owl:sameAs))
 ############################
 #   Annotation Properties
 ############################
@@ -38,10 +50,43 @@ AnnotationPropertyDomain(schema:geo mag:Crash)
 #   Object Properties
 ############################
 
+# Object Property: dbo:city (dbo:city)
+
+ObjectPropertyDomain(dbo:city mag:Crash)
+ObjectPropertyRange(dbo:city dbo:City)
+
 # Object Property: schema:geo (schema:geo)
 
+InverseFunctionalObjectProperty(schema:geo)
 ObjectPropertyDomain(schema:geo mag:Crash)
 ObjectPropertyRange(schema:geo schema:GeoCoordinates)
+
+
+############################
+#   Data Properties
+############################
+
+# Data Property: schema:latitude (schema:latitude)
+
+EquivalentDataProperties(schema:latitude geo:lat)
+DataPropertyDomain(schema:latitude schema:GeoCoordinates)
+DataPropertyRange(schema:latitude xsd:decimal)
+
+# Data Property: schema:longitude (schema:longitude)
+
+EquivalentDataProperties(schema:longitude geo:long)
+DataPropertyDomain(schema:longitude schema:GeoCoordinates)
+DataPropertyRange(schema:longitude xsd:decimal)
+
+# Data Property: geo:lat (geo:lat)
+
+DataPropertyDomain(geo:lat geo:GeoCoordinates)
+DataPropertyRange(geo:lat xsd:decimal)
+
+# Data Property: geo:long (geo:long)
+
+DataPropertyDomain(geo:long geo:GeoCoordinates)
+DataPropertyRange(geo:long xsd:decimal)
 
 
 
@@ -49,23 +94,28 @@ ObjectPropertyRange(schema:geo schema:GeoCoordinates)
 #   Classes
 ############################
 
+# Class: mag:Crash (mag:Crash)
+
+SubClassOf(mag:Crash schema:Place)
+
 # Class: mag:CrashWithCoord (mag:CrashWithCoord)
 
 EquivalentClasses(mag:CrashWithCoord ObjectSomeValuesFrom(schema:geo schema:GeoCoordinates))
 SubClassOf(mag:CrashWithCoord mag:Crash)
+
+# Class: <http://www.co-ode.org/ontologies/ont.owl#CrashLinkedCity> (<http://www.co-ode.org/ontologies/ont.owl#CrashLinkedCity>)
+
+EquivalentClasses(<http://www.co-ode.org/ontologies/ont.owl#CrashLinkedCity> ObjectSomeValuesFrom(dbo:city dbo:City))
+SubClassOf(<http://www.co-ode.org/ontologies/ont.owl#CrashLinkedCity> mag:Crash)
 
 
 ############################
 #   Named Individuals
 ############################
 
-# Individual: <http://ex.org/car-crashes/14LA009452> (<http://ex.org/car-crashes/14LA009452>)
+# Individual: <http://dbpedia.org/resource/Nantes> (<http://dbpedia.org/resource/Nantes>)
 
-AnnotationAssertion(dbo:city <http://ex.org/car-crashes/14LA009452> <http://dbpedia.org/resource/Hors-departement-56>)
-AnnotationAssertion(dbo:year <http://ex.org/car-crashes/14LA009452> "2014"^^xsd:integer)
-AnnotationAssertion(mag:crashType <http://ex.org/car-crashes/14LA009452> "Accident voie publique")
-AnnotationAssertion(xsd:dateTime <http://ex.org/car-crashes/14LA009452> "2014-02-14T22:37:00+01:00"^^xsd:dateTime)
-ClassAssertion(mag:Crash <http://ex.org/car-crashes/14LA009452>)
+ClassAssertion(dbo:City <http://dbpedia.org/resource/Nantes>)
 
 # Individual: <http://ex.org/car-crashes/15LA058540> (<http://ex.org/car-crashes/15LA058540>)
 
@@ -75,13 +125,28 @@ AnnotationAssertion(mag:crashType <http://ex.org/car-crashes/15LA058540> "Accide
 AnnotationAssertion(schema:geo <http://ex.org/car-crashes/15LA058540> <http://ex.org/car-crashes/47.2440687735,-1.5510107177>)
 AnnotationAssertion(xsd:dateTime <http://ex.org/car-crashes/15LA058540> "2015-09-23T19:11:00+02:00"^^xsd:dateTime)
 ClassAssertion(mag:Crash <http://ex.org/car-crashes/15LA058540>)
+ObjectPropertyAssertion(dbo:city <http://ex.org/car-crashes/15LA058540> <http://dbpedia.org/resource/Nantes>)
 ObjectPropertyAssertion(schema:geo <http://ex.org/car-crashes/15LA058540> <http://ex.org/car-crashes/47.2440687735,-1.5510107177>)
+
+# Individual: <http://ex.org/car-crashes/19LA003636> (<http://ex.org/car-crashes/19LA003636>)
+
+AnnotationAssertion(dbo:city <http://ex.org/car-crashes/19LA003636> <http://dbpedia.org/resource/Puceul>)
+AnnotationAssertion(dbo:year <http://ex.org/car-crashes/19LA003636> "2019"^^xsd:integer)
+AnnotationAssertion(mag:crashType <http://ex.org/car-crashes/19LA003636> "Accident voie publique")
+AnnotationAssertion(xsd:dateTime <http://ex.org/car-crashes/19LA003636> "2019-01-13T18:07:57+01:00"^^xsd:dateTime)
+ClassAssertion(mag:Crash <http://ex.org/car-crashes/19LA003636>)
 
 # Individual: <http://ex.org/car-crashes/47.2440687735,-1.5510107177> (<http://ex.org/car-crashes/47.2440687735,-1.5510107177>)
 
-AnnotationAssertion(schema:latitude <http://ex.org/car-crashes/47.2440687735,-1.5510107177> "47.2440687735"^^xsd:double)
-AnnotationAssertion(schema:longitude <http://ex.org/car-crashes/47.2440687735,-1.5510107177> "-1.5510107177"^^xsd:double)
 ClassAssertion(schema:GeoCoordinates <http://ex.org/car-crashes/47.2440687735,-1.5510107177>)
+DataPropertyAssertion(schema:latitude <http://ex.org/car-crashes/47.2440687735,-1.5510107177> "47.2440687735"^^xsd:decimal)
+DataPropertyAssertion(schema:longitude <http://ex.org/car-crashes/47.2440687735,-1.5510107177> "-1.5510107177"^^xsd:decimal)
+
+# Individual: <http://ex.org/car-crashes/47.2800607735,-1.4584318711> (<http://ex.org/car-crashes/47.2800607735,-1.4584318711>)
+
+ClassAssertion(schema:GeoCoordinates <http://ex.org/car-crashes/47.2800607735,-1.4584318711>)
+DataPropertyAssertion(schema:latitude <http://ex.org/car-crashes/47.2800607735,-1.4584318711> "47.2800607735"^^xsd:decimal)
+DataPropertyAssertion(schema:longitude <http://ex.org/car-crashes/47.2800607735,-1.4584318711> "-1.4584318711"^^xsd:decimal)
 
 
 )

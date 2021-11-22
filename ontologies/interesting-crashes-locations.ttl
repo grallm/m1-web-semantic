@@ -18,9 +18,9 @@
         schema:latitude   "47.2440687735"^^xsd:double ;
         schema:longitude  "-1.5510107177"^^xsd:double .
 
-<http://ex.org/car-crashes/14LA009452>
+<http://ex.org/car-crashes/19LA003636>
         rdf:type       mag:Crash ;
-        dbo:city       <http://dbpedia.org/resource/Hors-departement-56> ;
-        dbo:year       2014 ;
-        xsd:dateTime   "2014-02-14T22:37:00+01:00"^^xsd:dateTime ;
+        dbo:city       <http://dbpedia.org/resource/Puceul> ;
+        dbo:year       2019 ;
+        xsd:dateTime   "2019-01-13T18:07:57+01:00"^^xsd:dateTime ;
         mag:crashType  "Accident voie publique" .
