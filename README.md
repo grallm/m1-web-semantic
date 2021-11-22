@@ -14,8 +14,8 @@ We will also be able to link our data with the other crouse groups and host our 
 By using the mapping files `mapping-crashes.sparql` and `mapping-locations.sparql` with Tarql we have been able to transform the CSV data to a Turtle Linked Data.
 
 ```
-./tarql projet-sem/mapping-crashes.sparql projet-sem/accidents.csv > projet-sem/data-accidents-mag.ttl
-./tarql-1.2/bin/tarql projet-sem/mapping-locations.sparql projet-sem/accidents.csv >> projet-sem/data-accidents-mag.ttl
+./tarql projet-sem/mapping/mapping-crashes.sparql projet-sem/data/accidents.csv > projet-sem/mapping/data-accidents-mag.ttl
+./tarql-1.2/bin/tarql projet-sem/mapping/mapping-locations.sparql projet-sem/data/accidents.csv >> projet-sem/mapping/data-accidents-mag.ttl
 ```
 
 ## Ontologies
