@@ -1,0 +1,26 @@
+@prefix dbo:  <http://dbpedia.org/ontology/> .
+@prefix geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix schema:  <http://schema.org/> .
+@prefix mag:  <http://ex.org/car-crashes#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ex.org/car-crashes/15LA058540>
+        rdf:type       mag:Crash ;
+        dbo:city       <http://dbpedia.org/resource/Nantes> ;
+        dbo:year       2015 ;
+        xsd:dateTime   "2015-09-23T19:11:00+02:00"^^xsd:dateTime ;
+        mag:crashType  "Accident voie publique" ;
+        schema:geo     <http://ex.org/car-crashes/47.2440687735,-1.5510107177> .
+
+<http://ex.org/car-crashes/47.2440687735,-1.5510107177>
+        rdf:type          schema:GeoCoordinates ;
+        schema:latitude   "47.2440687735"^^xsd:double ;
+        schema:longitude  "-1.5510107177"^^xsd:double .
+
+<http://ex.org/car-crashes/14LA009452>
+        rdf:type       mag:Crash ;
+        dbo:city       <http://dbpedia.org/resource/Hors-departement-56> ;
+        dbo:year       2014 ;
+        xsd:dateTime   "2014-02-14T22:37:00+01:00"^^xsd:dateTime ;
+        mag:crashType  "Accident voie publique" .

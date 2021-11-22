@@ -11,11 +11,15 @@ We will also be able to link our data with the other crouse groups and host our 
 [Interventions pour accident sur la voie publique en Loire-Atlantique](https://data.loire-atlantique.fr/explore/dataset/284400017_interventions-pour-accident-sur-la-voie-publique-en-loire-atlantique/)
 
 ## From CSV to Turtle
-By using the mapping file `mapping-accidents.sparql` and Tarql we have been able to transform the CSV data to a Turtle Linked Data.
+By using the mapping files `mapping-crashes.sparql` and `mapping-locations.sparql` with Tarql we have been able to transform the CSV data to a Turtle Linked Data.
 
 ```
-./tarql --ntriples mapping-accidents.sparql accidents.csv > data-accidents-mag.ttl
+./tarql projet-sem/mapping-crashes.sparql projet-sem/accidents.csv > projet-sem/data-accidents-mag.ttl
+./tarql-1.2/bin/tarql projet-sem/mapping-locations.sparql projet-sem/accidents.csv >> projet-sem/data-accidents-mag.ttl
 ```
+
+## Ontologies
+To help us convert our RDF Turtle to OWL we used [this website](https://www.ldf.fi/service/owl-converter/)
 
 ## Project members
 - Malo GRALL
